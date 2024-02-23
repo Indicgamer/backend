@@ -14,6 +14,7 @@ app.use(session({
 
 
 
+
 const validateSession = (req, res, next) => {
     if(req.session.isLoggedIn){
         next();
@@ -23,6 +24,9 @@ const validateSession = (req, res, next) => {
 }
 
 //routes
+app.use("/",(req,res)=>{
+    res.send("Hello World");
+})
 app.use('/api/auth', require('./routes/authRouter'));
 app.use("/api/prod", validateSession,require('./routes/prodRouter'));
 
