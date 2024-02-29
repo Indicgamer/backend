@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const app = express();
 (async() =>{
     try{
-        await mongoose.connect("mongodb+srv://indic_gamer:<password>@cluster0.3gah2fh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+        await mongoose.connect("mongodb+srv://indic_gamer:admin123@cluster0.3gah2fh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
         console.log("Connected to the database");
     }catch(e){
         console.log("MongoDB error: ",e);
