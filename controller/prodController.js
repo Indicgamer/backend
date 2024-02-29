@@ -1,21 +1,23 @@
-const Connection = require('../config/db');
+const {Users,Products_idea} = require('../config/db');
 
 const addProdController = async (req, res) => {
     try {
-        const name = req.session.username;
-        const product_idea = req.body.product_idea;
-        if(product_idea){
-            const [result] = await (await Connection).execute("INSERT INTO product_ideas (name, product_idea) VALUES (?, ?)", [name, product_idea]);
-            console.log(result);
-            res.status(201).json({message:"Product idea added successfully", success:true});
-        }else{
-            res.status(400).json({message:"Product idea cannot be empty", success:false});
+        if(!(req.body.description)){
+            return res.status(400).json({message:"Description of the product are required", success:false});
         }
-        
+        const id = await Products_idea.find().countDocuments();
+        const product = new Products_idea({
+            _id:id+1,
+            name:req.session.username,
+            description:req.body.description
+        });
+        await product.save();
+        return res.status(201).json({message:"Product Idea added successfully", success:true});
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Internal server error",
+            message: "Internal server error"+error,
             success: false
         });
     }
@@ -24,13 +26,17 @@ const addProdController = async (req, res) => {
 
 const allProdOfUserController = async (req, res) => {
     try {
-        const [results] = await (await Connection).execute("SELECT * FROM product_ideas WHERE name = ?", [req.session.username]);
-        res.status(200).json({product_ideas:results, success:true});
+        const allProducts = await Products_idea.find({name:req.session.username});
+        const allProdIdeas = allProducts.map((product) => {
+            return product.description;
+        });
+        return res.status(200).json({message:"All product ideas of the user", success:true, data:allProdIdeas});
+
         
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Internal server error",
+            message: "Internal server error"+error,
             success: false
         });
         
@@ -39,8 +45,11 @@ const allProdOfUserController = async (req, res) => {
 
 const prodAllController = async (req, res) => {
     try {
-        const [results] = await (await Connection).execute("SELECT * FROM product_ideas");
-        res.status(200).json({product_ideas:results, success:true});
+        const allProducts = await Products_idea.find();
+        const allProdIdeas = allProducts.map((product) => {
+            return product.description;
+        });
+        return res.status(200).json({message:"All product ideas", success:true, data:allProdIdeas});
         
     } catch (error) {
         console.log(error);
