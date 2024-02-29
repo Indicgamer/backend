@@ -46,8 +46,8 @@ app.post("/register",(req,res)=>{
         password:password
     });
     user.save().then(()=>{
-        res.send("User registered successfully");
         req.session.isLoggedIn = true;
+        res.send("User registered successfully");
     }).catch((e)=>{
         res.status(500).send("Error: "+e);
     });
