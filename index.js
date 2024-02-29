@@ -27,7 +27,7 @@ app.get("/",(req,res)=>{
 })
 
 
-const users = mongoose.Schema({
+const users = new mongoose.Schema({
     username:String,
     password:String
 });
