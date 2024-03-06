@@ -15,6 +15,7 @@ app.use(session({
         httpOnly:true,
         sameSite: 'none',
         secure: true,
+        domain: "https://backend-tau-kohl.vercel.app"
     }
     }));
 app.use(cors({
