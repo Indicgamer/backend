@@ -11,12 +11,6 @@ app.use(session({
     secret:"MySecret",
     resave:false,
     saveUninitialized:false,
-    cookie:{
-        httpOnly:true,
-        sameSite: 'none',
-        secure: true,
-        domain: "https://backend-tau-kohl.vercel.app"
-    }
     }));
 app.use(cors({
     origin: true,
