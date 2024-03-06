@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 
 const PORT = 3000;
 const app = express();
@@ -9,9 +10,17 @@ app.use(express.json());
 app.use(session({
     secret:"MySecret",
     resave:false,
-    saveUninitialized:false
+    saveUninitialized:false,
+    cookie:{
+        httpOnly:true,
+        secure: true,
+        sameSite: 'none'
+    }
     }));
-
+app.use(cors({
+    origin: true,
+    credentials: true,
+}));
 
 
 const validateSession = (req, res, next) => {
