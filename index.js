@@ -14,8 +14,6 @@ app.use(session({
     saveUninitialized:false,
     cookie: {
         maxAge: thirtyDays,
-        sameSite: "none",
-        secure: true,
     }
 }));
 
