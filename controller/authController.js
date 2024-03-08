@@ -50,8 +50,15 @@ const LoginController = async (req, res) => {
     if(!validPassword){
       return res.status(400).json({message:"Invalid password", success:false});
     }
-    req.session.isLoggedIn = true;
-    req.session.username = req.body.username;
+    // req.session.isLoggedIn = true;
+    // req.session.username = req.body.username;
+    let thirtyDays = 1000 * 60 * 60 * 24 * 30; //30 days worth of milliseconds
+    res.cookie(key, value, {
+      maxAge: thirtyDays,
+      path: '/',
+      sameSite: 'None',
+      secure: true,
+    });
     return res.status(200).json({message:"Logged in successfully", success:true});
 
   } catch (error) {
