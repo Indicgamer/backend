@@ -53,6 +53,11 @@ const LoginController = async (req, res) => {
     // req.session.isLoggedIn = true;
     // req.session.username = req.body.username;
     let thirtyDays = 1000 * 60 * 60 * 24 * 30; //30 days worth of milliseconds
+    let key = 'token';
+  let value = [...new Array(30)]
+    .map((item) => ((Math.random() * 36) | 0).toString(36))
+    .join('');
+
     res.cookie(key, value, {
       maxAge: thirtyDays,
       path: '/',
