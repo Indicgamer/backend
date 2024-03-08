@@ -15,6 +15,7 @@ app.use(session({
     cookie: {
         maxAge: thirtyDays,
         sameSite: "none",
+        secure: true,
     }
 }));
 
