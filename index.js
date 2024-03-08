@@ -14,6 +14,9 @@ app.use(session({
     saveUninitialized:false,
     cookie: {
         maxAge: thirtyDays,
+        domain: "vercel.app",
+        sameSite: "none",
+        secure: true,
     }
 }));
 
