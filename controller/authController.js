@@ -22,8 +22,13 @@ const registerController = async (req, res) => {
       password: hashedPassword,
     });
     await user.save();
-    req.session.isLoggedIn = true;
-    req.session.username = req.body.username;
+    let thirtyDays = 1000 * 60 * 60 * 24 * 30; //30 days worth of milliseconds
+    res.cookie("_id", id + 1, {
+      maxAge: thirtyDays,
+      path: "/",
+      sameSite: "None",
+      secure: true,
+    });
     return res.status(201).json({ message: "User created Successfully", success: true });
 
   } catch (error) {
@@ -53,12 +58,7 @@ const LoginController = async (req, res) => {
     // req.session.isLoggedIn = true;
     // req.session.username = req.body.username;
     let thirtyDays = 1000 * 60 * 60 * 24 * 30; //30 days worth of milliseconds
-    let key = 'token';
-  let value = [...new Array(30)]
-    .map((item) => ((Math.random() * 36) | 0).toString(36))
-    .join('');
-
-    res.cookie(key, value, {
+    res.cookie("_id", user[0]._id, {
       maxAge: thirtyDays,
       path: '/',
       sameSite: 'None',

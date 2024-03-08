@@ -1,5 +1,5 @@
 const express = require('express');
-const session = require('express-session');
+// const session = require('express-session');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 
@@ -28,7 +28,7 @@ app.use(cors({
 
 
 const validateSession = (req, res, next) => {
-    if(req.session.isLoggedIn){
+    if(req.cookies._id){
         next();
     }else{
         res.status(401).json({message:"Unauthenticated"});
