@@ -6,10 +6,9 @@ const addProdController = async (req, res) => {
             return res.status(400).json({message:"Description of the product are required", success:false});
         }
         const id = await Products_idea.find().countDocuments();
-        const user = await Users.find({_id:req.cookies._id});
         const product = new Products_idea({
             _id:id+1,
-            name:user[0].username,
+            name:req.cookies.name,
             description:req.body.description
         });
         await product.save();
@@ -27,7 +26,7 @@ const addProdController = async (req, res) => {
 
 const allProdOfUserController = async (req, res) => {
     try {
-        const allProducts = await Products_idea.find({_name:req.params.name});
+        const allProducts = await Products_idea.find({name:req.params.name});
         const allProdIdeas = allProducts.map((product) => {
             return product.description;
         });

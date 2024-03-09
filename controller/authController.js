@@ -23,7 +23,7 @@ const registerController = async (req, res) => {
     });
     await user.save();
     let thirtyDays = 1000 * 60 * 60 * 24 * 30; //30 days worth of milliseconds
-    res.cookie("_id", id + 1, {
+    res.cookie("name", user.username, {
       maxAge: thirtyDays,
       path: "/",
       sameSite: "None",
@@ -58,7 +58,7 @@ const LoginController = async (req, res) => {
     // req.session.isLoggedIn = true;
     // req.session.username = req.body.username;
     let thirtyDays = 1000 * 60 * 60 * 24 * 30; //30 days worth of milliseconds
-    res.cookie("_id", user[0]._id, {
+    res.cookie("name", user[0].username, {
       maxAge: thirtyDays,
       path: '/',
       sameSite: 'None',

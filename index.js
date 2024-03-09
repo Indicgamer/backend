@@ -28,7 +28,7 @@ app.use(cors({
 
 
 const validateSession = (req, res, next) => {
-    if(req.cookies._id){
+    if(req.cookies.name){
         next();
     }else{
         res.status(401).json({message:"Unauthenticated"});
